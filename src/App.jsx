@@ -2,20 +2,19 @@ import React, { useState } from "react";
 import Board from "./components/Board";
 import "./style/root.scss";
 import Winner from "./components/Winner";
+import History from "./components/History";
 
 const app = () => {
   const [history, setHistory] = useState([
     { board: Array(9).fill(null), isXNext: true },
   ]);
 
-  console.log(history);
-  // const [isXNext, setIsXNext] = useState(false);
   const [currentMove, setCurrentMove] = useState(0);
 
   const current = history[currentMove];
 
   const winner = Winner(current.board);
-  console.log(winner);
+
   const message = winner
     ? `Winner is ${winner}`
     : `Next is ${current.isXNext ? "X" : "O"}`;
@@ -42,12 +41,16 @@ const app = () => {
     setCurrentMove((prev) => prev + 1);
   };
 
+  const moveTo = (move) => {
+    setCurrentMove(move);
+  };
   return (
     <>
       <div className="app">
         <h1>TICTACTOE</h1>
         <h2>{message}</h2>
         <Board board={current.board} handleSqaureClick={handleSqaureClick} />
+        <History history={history} moveTo={moveTo} currentMove={currentMove} />
       </div>
     </>
   );
