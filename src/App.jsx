@@ -5,16 +5,15 @@ import Winner from "./components/Winner";
 import History from "./components/History";
 import StatusMessage from "./components/StatusMessage";
 
+const newGame = [{ board: Array(9).fill(null), isXNext: true }];
 const app = () => {
-  const [history, setHistory] = useState([
-    { board: Array(9).fill(null), isXNext: true },
-  ]);
+  const [history, setHistory] = useState(newGame);
 
   const [currentMove, setCurrentMove] = useState(0);
 
   const current = history[currentMove];
 
-  const winner = Winner(current.board);
+  const { winner, winningSquare } = Winner(current.board);
 
   const message = winner
     ? `Winner is ${winner}`
@@ -45,12 +44,24 @@ const app = () => {
   const moveTo = (move) => {
     setCurrentMove(move);
   };
+
+  const onNewGame = () => {
+    setHistory(newGame);
+    setCurrentMove(0);
+  };
   return (
     <>
       <div className="app">
         <h1>TICTACTOE</h1>
         <StatusMessage winner={winner} current={current} />
-        <Board board={current.board} handleSqaureClick={handleSqaureClick} />
+        <Board
+          board={current.board}
+          handleSqaureClick={handleSqaureClick}
+          winningSquare={winningSquare}
+        />
+        <button type="button" onClick={onNewGame}>
+          Start New Game
+        </button>
         <History history={history} moveTo={moveTo} currentMove={currentMove} />
       </div>
     </>
