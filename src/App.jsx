@@ -3,6 +3,7 @@ import Board from "./components/Board";
 import "./style/root.scss";
 import Winner from "./components/Winner";
 import History from "./components/History";
+import StatusMessage from "./components/StatusMessage";
 
 const app = () => {
   const [history, setHistory] = useState([
@@ -48,7 +49,7 @@ const app = () => {
     <>
       <div className="app">
         <h1>TICTACTOE</h1>
-        <h2>{message}</h2>
+        <StatusMessage winner={winner} current={current} />
         <Board board={current.board} handleSqaureClick={handleSqaureClick} />
         <History history={history} moveTo={moveTo} currentMove={currentMove} />
       </div>
